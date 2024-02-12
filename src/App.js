@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ResourceList from './components/ResourceList';
+import AddResourceForm from './components/AddResourceForm';
 
 function App() {
+  const [resources, setResources] = useState([]);
+
+  const addResource = (newResource) => {
+    setResources([...resources, newResource]);
+  };
+
+  const deleteResource = (resourceId) => {
+    const updatedResources = resources.filter(
+      (resource) => resource.id !== resourceId
+    );
+    setResources(updatedResources);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Source Management</h1>
+      <AddResourceForm addResource={addResource} />
+      <ResourceList resources={resources} deleteResource={deleteResource} />
     </div>
   );
 }
